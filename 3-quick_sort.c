@@ -5,10 +5,10 @@ void swap(int *array, int idx1, int idx2);
 void partition(int *array, int low, int high, size_t size);
 
 /**
- * quick_sort - Sorts an array of integers in ascending order using quick sort
- * @array: Holds the array
- * @size: holds the size
- */
+* quick_sort - Sorts an array of integers in ascending order using quick sort
+* @array: Holds the array
+* @size: holds the size
+*/
 
 void quick_sort(int *array, size_t size)
 {
@@ -17,12 +17,12 @@ void quick_sort(int *array, size_t size)
 }
 
 /**
- * partition- Paritions the array into sub groups: low, pivot, high
- * @array: Holds the array
- * @low: Holds the beginning of the partition
- * @high: Index of the last index of the partition
- * @size: the size of the array
- */
+* partition- Paritions the array into sub groups: low, pivot, high
+* @array: Holds the array
+* @low: Holds the beginning of the partition
+* @high: Index of the last index of the partition
+* @size: the size of the array
+*/
 
 void partition(int *array, int low, int high, size_t size)
 {
@@ -68,11 +68,11 @@ void partition(int *array, int low, int high, size_t size)
 }
 
 /**
- * swap- swaps two indices
- * @array: Holds the array
- * @idx1: The first index
- * @idx2: The second index
- */
+* swap- swaps two indices
+* @array: Holds the array
+* @idx1: The first index
+* @idx2: The second index
+*/
 
 void swap(int *array, int idx1, int idx2)
 {
