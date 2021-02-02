@@ -1,55 +1,39 @@
 #include "sort.h"
 
-void swap_list(listint_t *, listint_t *, listint_t **);
-
 /**
-  * insertion_sort_list - sorts a list using insertion sort
-  *
-  * @list: double pointer to head of list
-  */
+ * insertion_sort_list - sorts a doubly linked list of integers in ascending
+ * order using the Insertion sort algorithm
+ * @list: Double pointer to the head of the linked list
+ *
+ * Return: void
+ */
 void insertion_sort_list(listint_t **list)
 {
-	listint_t *curr = NULL;
-	listint_t *prev = NULL;
+	listint_t *swap_node, *next_swap;
 
-	if (list == NULL || *list == NULL || (*list)->next == NULL)
+	if (list == NULL || *list == NULL)
 		return;
-
-	curr = (*list)->next;
-	prev = curr->prev;
-	while (curr != NULL)
+	swap_node = (*list)->next;
+	while (swap_node != NULL)
 	{
-		prev = curr->prev;
-		while (prev != NULL && prev->n > curr->n)
+		next_swap = swap_node->next;
+		if (swap_node->prev != NULL && swap_node->prev->n > swap_node->n)
 		{
-			swap_list(curr, prev, list);
-			prev = curr->prev;
+			swap_node->prev->next = swap_node->next;
+			if (swap_node->next != NULL)
+				swap_node->next->prev = swap_node->prev;
+			while (swap_node->prev != NULL && swap_node->prev->n > swap_node->n)
+			{
+				swap_node->next = swap_node->prev;
+				swap_node->prev = swap_node->prev->prev;
+			}
+			if (swap_node->prev == NULL)
+				*list = swap_node;
+			else
+				swap_node->prev->next = swap_node;
+			swap_node->next->prev = swap_node;
+			print_list(*list);
 		}
-		curr = curr->next;
+		swap_node = next_swap;
 	}
-}
-
-/**
-  * swap_list - swaps two members of a list
-  *
-  * @curr: current node
-  * @prev: previous node
-  * @head: head of list
-  */
-void swap_list(listint_t *curr, listint_t *prev, listint_t **head)
-{
-	listint_t *temp1 = curr->next;
-	listint_t *temp2 = prev->prev;
-
-	if (temp1 != NULL)
-		temp1->prev = prev;
-	if (temp2 != NULL)
-		temp2->next = curr;
-	curr->prev = temp2;
-	prev->next = temp1;
-	curr->next = prev;
-	prev->prev = curr;
-	if (*head == prev)
-		*head = curr;
-	print_list(*head);
 }
