@@ -1,8 +1,6 @@
 #ifndef _SORT_H_
 #define _SORT_H_
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <stddef.h>
 
 /**
@@ -33,6 +31,5 @@ void heap_sort(int *array, size_t size);
 void radix_sort(int *array, size_t size);
 void bitonic_sort(int *array, size_t size);
 void quick_sort_hoare(int *array, size_t size);
-void swap_int(int *array, int index, size_t size);
 
-#endif /*_SORT_H_*/
+#endif /* _SORT_H_ */
