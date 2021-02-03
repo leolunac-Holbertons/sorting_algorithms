@@ -1,84 +1,79 @@
 #include "sort.h"
-
-
-void swap(int *array, int idx1, int idx2);
-void partition(int *array, int low, int high, size_t size);
+#include <stdio.h>
 
 /**
-* quick_sort - Sorts an array of integers in ascending order using quick sort
-* @array: Holds the array
-* @size: holds the size
+* partition - finds the partition for the quicksort using the Lomuto scheme
+* @array: array to sort
+* @lo: lowest index of the partition to sort
+* @hi: highest index of the partition to sort
+* @size: size of the array
+*
+* Return: index of the partition
 */
-
-void quick_sort(int *array, size_t size)
+size_t partition(int *array, ssize_t lo, ssize_t hi, size_t size)
 {
-	if (array)
-		partition(array, 0, size - 1, size);
-}
+	ssize_t i, j;
+	int swap, pivot;
 
-/**
-* partition- Paritions the array into sub groups: low, pivot, high
-* @array: Holds the array
-* @low: Holds the beginning of the partition
-* @high: Index of the last index of the partition
-* @size: the size of the array
-*/
-
-void partition(int *array, int low, int high, size_t size)
-{
-	int cur;
-	int pivot = high;
-	int lesser = low;
-	int greater = low;
-
-	if (size < 2)
-		return;
-
-	for (cur = low; cur <= high; cur += 1)
+	pivot = array[hi];
+	i = lo - 1;
+	for (j = lo; j < hi; j++)
 	{
-		if (array[cur] > array[pivot])
-			greater += 1;
-		if (array[cur] < array[pivot])
+		if (array[j] < pivot)
 		{
-			if (cur != lesser)
+			i++;
+			if (i != j)
 			{
-				swap(array, lesser, cur);
+				swap = array[i];
+				array[i] = array[j];
+				array[j] = swap;
 				print_array(array, size);
 			}
-			lesser += 1;
 		}
 	}
-
-	/* move pivot to where it belongs */
-	if (pivot != lesser && array[pivot] != array[lesser])
+	if (array[hi] < array[i + 1])
 	{
-		swap(array, pivot, lesser);
+		swap = array[i + 1];
+		array[i + 1] = array[hi];
+		array[hi] = swap;
 		print_array(array, size);
 	}
-	/* Partition left subgroup */
-	if (lesser - 1 > low)
+	return (i + 1);
+}
+
+/**
+* quicksort - sorts a partition of an array of integers
+* @array: array to sort
+* @lo: lowest index of the partition to sort
+* @hi: highest index of the partition to sort
+* @size: size of the array
+*
+* Return: void
+*/
+void quicksort(int *array, ssize_t lo, ssize_t hi, size_t size)
+{
+	ssize_t pivot;
+
+	if (lo < hi)
 	{
-		partition(array, low, lesser - 1, size);
-	}
-	/* Partition right subgroup */
-	if (lesser + 1 < high)
-	{
-		partition(array, lesser + 1, high, size);
+		pivot = partition(array, lo, hi, size);
+		quicksort(array, lo, pivot - 1, size);
+		quicksort(array, pivot + 1, hi, size);
+
 	}
 }
 
 /**
-* swap- swaps two indices
-* @array: Holds the array
-* @idx1: The first index
-* @idx2: The second index
+* quick_sort - sorts an array of integers in ascending order using the
+* Quick sort algorithm
+* @array: The array to sort
+* @size: The size of the array
+*
+* Return: void
 */
-
-void swap(int *array, int idx1, int idx2)
+void quick_sort(int *array, size_t size)
 {
-	int temp;
-
-	temp = array[idx1];
-	array[idx1] = array[idx2];
-	array[idx2] = temp;
+	if (array == NULL || size < 2)
+		return;
+	quicksort(array, 0, size - 1, size);
 }
